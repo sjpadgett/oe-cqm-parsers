@@ -1,15 +1,14 @@
-# puts "Please enter your name"
-# name = gets.chomp
-# puts "Hello, #{name}! I'm Ruby!"
-# Set the VSACValueSetLoader options; in this example we are fetching a specific profile
-#
-require 'rails'
-require 'measure-loader/vsac_value_set_loader'
-require 'measure-loader/cql_loader'
+require_relative '../cqm-parsers/lib/cqm-parsers.rb'
+require 'json'
+
+APP_CONFIG = {'vsac'=> {'auth_url'=> 'https://vsac.nlm.nih.gov/vsac/ws',
+                        'content_url' => 'https://vsac.nlm.nih.gov/vsac/svs',
+                        'utility_url' => 'https://vsac.nlm.nih.gov/vsac',
+                        'default_profile' => 'MU2 Update 2016-04-01'}}
 
 vsac_options = {
   options: {},
-  api_key: '165874b1-4cdc-4d2f-9c80-41dff514333a'
+  api_key: 'xxxx'
 }
 
 # Set the measure details. For defaults, you can just pass in {}.
@@ -25,3 +24,7 @@ value_set_loader = Measures::VSACValueSetLoader.new(vsac_options)
 loader = Measures::CqlLoader.new(measure_file, measure_details, value_set_loader)
 # Build an array of measure models.
 measures = loader.extract_measures
+
+measures.each do |measure|
+  puts measure.to_json
+end
