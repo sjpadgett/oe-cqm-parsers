@@ -8,3 +8,4 @@ gem 'cqm-parsers', :git => 'https://github.com/mi-squared/cqm-parsers.git', :bra
 gem 'sprockets'
 gem 'rubyzip', '>= 1.3.0'
 gem 'zip-zip'
+gem 'dotenv'

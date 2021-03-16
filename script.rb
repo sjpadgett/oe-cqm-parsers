@@ -1,15 +1,22 @@
 require 'cqm-parsers'
 require 'json'
 require 'fileutils'
+require 'dotenv'
+
+Dotenv.load('.env')
 
 APP_CONFIG = {'vsac'=> {'auth_url'=> 'https://vsac.nlm.nih.gov/vsac/ws',
                         'content_url' => 'https://vsac.nlm.nih.gov/vsac/svs',
                         'utility_url' => 'https://vsac.nlm.nih.gov/vsac',
-                        'default_profile' => 'MU2 Update 2016-04-01'}}
+                        'default_profile' => 'eCQM Update 2019-05-10'}}
 
+# To see available VSAC profiles https://vsac.nlm.nih.gov/vsac/profiles
+# To get your VSAC API key https://uts.nlm.nih.gov/uts/profile
 vsac_options = {
-  options: {},
-  api_key: 'put your api key here'
+  options: {
+    profile: 'eCQM Update 2021-05-06'
+  },
+  api_key: ENV['VSAC_API_KEY']
 }
 
 # Set the measure details. For defaults, you can just pass in {}.
@@ -41,7 +48,7 @@ measure_files.each do |measure_file_name|
     end
     value_sets_json = measure.value_sets.to_json
     measure_json = measure.to_json
-    puts measure.to_json
+    # puts measure.to_json
     File.write(dirname + '/' + 'value_sets.json', value_sets_json)
     File.write(dirname + '/' + measure_name + '.json', measure_json)
   end

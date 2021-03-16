@@ -2,9 +2,10 @@ git clone https://github.com/mi-squared/oe-cqm-parsers
 
 cd oe-cqm-parsers
 
-put your VSAC API key in script.rb around line 12:
+cp .env.sample .env
 
-`api_key: 'put your api key here'`
+put your VSAC API key in .env like this:
+`VSAC_API_KEY=36806d55-084v-2mj9-d987-d651899e2144`
 
 bundle install
 
