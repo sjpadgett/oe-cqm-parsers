@@ -5,6 +5,9 @@ require 'dotenv'
 
 Dotenv.load('.env')
 
+# To be compatible with the eCQM calculator, the measure models must have the _type fields
+Mongoid.include_type_for_serialization = true
+
 APP_CONFIG = {'vsac'=> {'auth_url'=> 'https://vsac.nlm.nih.gov/vsac/ws',
                         'content_url' => 'https://vsac.nlm.nih.gov/vsac/svs',
                         'utility_url' => 'https://vsac.nlm.nih.gov/vsac',
