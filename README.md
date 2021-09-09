@@ -1,4 +1,4 @@
-git clone https://github.com/mi-squared/oe-cqm-parsers
+git clone https://github.com/openemr/oe-cqm-parsers
 
 cd oe-cqm-parsers
 
