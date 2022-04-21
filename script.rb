@@ -17,7 +17,7 @@ APP_CONFIG = {'vsac'=> {'auth_url'=> 'https://vsac.nlm.nih.gov/vsac/ws',
 # To get your VSAC API key https://uts.nlm.nih.gov/uts/profile
 vsac_options = {
   options: {
-    profile: 'eCQM Update 2022-05-05'
+    profile: 'eCQM Update 2021-05-06'
   },
   api_key: ENV['VSAC_API_KEY']
 }
