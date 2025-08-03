@@ -1,0 +1,44 @@
+# Simple Alpine-based image with Ruby and MongoDB
+# This version uses multi-stage build to handle network constraints
+FROM mongo:6.0 as mongo-stage
+FROM ruby:3.2-alpine
+
+# Copy MongoDB binaries from official MongoDB image
+COPY --from=mongo-stage /usr/bin/mongod /usr/local/bin/
+COPY --from=mongo-stage /usr/bin/mongosh /usr/local/bin/
+
+# Create mongodb user and directories
+RUN adduser -D -s /bin/sh mongodb && \
+    mkdir -p /data/db /var/log && \
+    chown -R mongodb:mongodb /data/db /var/log
+
+# Create MongoDB configuration
+RUN echo 'storage:' > /etc/mongod.conf && \
+    echo '  dbPath: /data/db' >> /etc/mongod.conf && \
+    echo 'systemLog:' >> /etc/mongod.conf && \
+    echo '  destination: file' >> /etc/mongod.conf && \
+    echo '  path: /var/log/mongodb.log' >> /etc/mongod.conf && \
+    echo 'net:' >> /etc/mongod.conf && \
+    echo '  port: 27017' >> /etc/mongod.conf && \
+    echo '  bindIp: 0.0.0.0' >> /etc/mongod.conf
+
+# Create startup script
+RUN echo '#!/bin/sh' > /usr/local/bin/start.sh && \
+    echo 'echo "Starting MongoDB..."' >> /usr/local/bin/start.sh && \
+    echo 'mongod --config /etc/mongod.conf --fork' >> /usr/local/bin/start.sh && \
+    echo 'sleep 3' >> /usr/local/bin/start.sh && \
+    echo 'echo "Ruby and MongoDB are running!"' >> /usr/local/bin/start.sh && \
+    echo 'echo "Ruby version:"' >> /usr/local/bin/start.sh && \
+    echo 'ruby --version' >> /usr/local/bin/start.sh && \
+    echo 'echo "MongoDB is accessible on port 27017"' >> /usr/local/bin/start.sh && \
+    echo 'tail -f /var/log/mongodb.log' >> /usr/local/bin/start.sh && \
+    chmod +x /usr/local/bin/start.sh
+
+# Expose MongoDB port
+EXPOSE 27017
+
+# Set working directory
+WORKDIR /app
+
+# Start services
+CMD ["/usr/local/bin/start.sh"]
