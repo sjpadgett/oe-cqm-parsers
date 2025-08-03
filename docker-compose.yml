@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      - MONGODB_URI=mongodb://db:27017/oe_cqm_parsers
+      - VSAC_API_KEY=${VSAC_API_KEY}
+    volumes:
+      - .:/app
+      - /app/vendor/bundle
+    networks:
+      - app-network
+
+  db:
+    image: mongo:7
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - app-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  app-network:
+    driver: bridge

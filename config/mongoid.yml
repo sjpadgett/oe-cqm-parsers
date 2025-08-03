@@ -1,0 +1,20 @@
+development:
+  clients:
+    default:
+      uri: <%= ENV['MONGODB_URI'] || 'mongodb://localhost:27017/oe_cqm_parsers' %>
+      options:
+        server_selection_timeout: 5
+
+production:
+  clients:
+    default:
+      uri: <%= ENV['MONGODB_URI'] || 'mongodb://localhost:27017/oe_cqm_parsers' %>
+      options:
+        server_selection_timeout: 5
+
+test:
+  clients:
+    default:
+      uri: <%= ENV['MONGODB_URI'] || 'mongodb://localhost:27017/oe_cqm_parsers_test' %>
+      options:
+        server_selection_timeout: 5

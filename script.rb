@@ -5,6 +5,10 @@ require 'dotenv'
 
 Dotenv.load('.env')
 
+# Configure Mongoid
+require 'mongoid'
+Mongoid.load!('config/mongoid.yml', ENV['RAILS_ENV'] || 'development')
+
 # To be compatible with the eCQM calculator, the measure models must have the _type fields
 Mongoid.include_type_for_serialization = true
 
