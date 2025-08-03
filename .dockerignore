@@ -1,0 +1,12 @@
+.git
+.gitignore
+README.md
+Dockerfile
+docker-compose.yml
+.dockerignore
+.env
+.env.sample
+*.md
+tmp/
+log/
+vendor/bundle
