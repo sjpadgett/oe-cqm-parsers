@@ -1,3 +1,5 @@
+
+require 'debug'
 require 'cqm-parsers'
 require 'json'
 require 'fileutils'
@@ -19,7 +21,7 @@ vsac_options = {
   options: {
     profile: 'eCQM Update 2021-05-06'
   },
-  api_key: ENV['VSAC_API_KEY']
+  vsac_api_key: ENV['VSAC_API_KEY']
 }
 
 # Set the measure details. For defaults, you can just pass in {}.
@@ -44,6 +46,7 @@ measure_files.each do |measure_file_name|
 
   measure_name = File.basename(measure_file_name, '.zip')
 
+  binding.break
   measures.each do |measure|
     dirname = 'json_measures/' + measure_name
     unless File.directory?(dirname)
