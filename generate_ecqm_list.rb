@@ -9,7 +9,7 @@ require 'cgi'
 options = {
   list_id: nil,
   list_title: nil,
-  json_dir: 'json_measures',
+  json_dir: "json_measures",
   output_dir: 'output',
   defaults: [],
   year: nil
@@ -28,7 +28,7 @@ end.parse!
 
 # --- Scan All JSONs and Collect Measure Metadata ---
 measures = []
-Dir.glob("#{options[:json_dir]}/**/*.json").each do |file_path|
+Dir.glob("#{options[:year]}_reporting_period/#{options[:json_dir]}/**/*.json").each do |file_path|
   next if file_path.include?('value_sets.json')
 
   begin
@@ -38,7 +38,7 @@ Dir.glob("#{options[:json_dir]}/**/*.json").each do |file_path|
     description = measure['description']
     next unless cms_id && title
 
-    measures << { id: cms_id, title: title,description: description }
+    measures << { id: cms_id, title: title, description: description }
   rescue => e
     warn "[WARN] Failed to process #{file_path}: #{e.message}"
   end
